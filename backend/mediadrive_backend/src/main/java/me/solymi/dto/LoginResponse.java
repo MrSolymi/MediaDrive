@@ -1,4 +1,4 @@
 package me.solymi.dto;
 
-public record LoginResponse(String sessionID) {
+public record LoginResponse(String Token) {
 }
