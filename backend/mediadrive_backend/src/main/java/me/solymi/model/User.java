@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,6 +34,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "last_login")
+    private ZonedDateTime lastLogin;
+
+    @Column(name = "last_ip")
+    private String lastIp;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("base"));
@@ -43,5 +50,6 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.lastLogin = ZonedDateTime.now();
     }
 }

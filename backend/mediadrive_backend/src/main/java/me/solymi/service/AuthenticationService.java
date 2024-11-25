@@ -5,5 +5,5 @@ import me.solymi.dto.LoginResponse;
 
 public interface AuthenticationService {
 
-    LoginResponse login(LoginRequest loginRequest);
+    LoginResponse login(LoginRequest loginRequest, String ipAddress);
 }

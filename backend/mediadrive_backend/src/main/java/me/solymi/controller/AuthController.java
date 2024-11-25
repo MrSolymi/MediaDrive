@@ -19,7 +19,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         System.out.println(loginRequest.username());
 
-        Object data = authService.login(loginRequest);
+        Object data = authService.login(loginRequest, request.getRemoteAddr());
 
         return ResponseEntity.ok(data);
     }
