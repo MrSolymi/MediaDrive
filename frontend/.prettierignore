@@ -1,22 +1,4 @@
-# Ignore files for PNPM, NPM and YARN
-pnpm-lock.yaml
+# Package Managers
 package-lock.json
+pnpm-lock.yaml
 yarn.lock
-package.json
-
-# Ignore config files
-.vscode/
-.eslintrc.cjs
-.prettierrc
-playwright.config.ts
-README.md
-svelte.config.js
-tsconfig.json
-vite.config.ts
-
-# GitHub specific config
-.github
-
-# Shadcn
-src/lib/components/ui
-src/lib/utils.ts
