@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import me.solymi.service.JwtService;
 import me.solymi.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,21 +27,21 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserService userService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");//Bearer xxx.yyy.zz
         final String jwt;
-        final String userEmail;
+        final String username;
         //nincs authorization header vagy nem bearer sémát használ
         if(StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader,"Bearer ")){
             filterChain.doFilter(request,response);
             return ;
         }
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);
+        username = jwtService.extractUsername(jwt);
 
-        if(StringUtils.isNotEmpty(userEmail)
+        if(StringUtils.isNotEmpty(username)
                 && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = userService.getUserDetailsService().loadUserByUsername(userEmail);
+            UserDetails userDetails = userService.getUserDetailsService().loadUserByUsername(username);
             if(jwtService.validateToken(jwt, userDetails)){
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

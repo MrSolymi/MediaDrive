@@ -1,48 +1,42 @@
-import { superValidate } from 'sveltekit-superforms'
+import { actionResult, setError, superValidate } from 'sveltekit-superforms'
 import type { Actions, PageServerLoad } from './$types'
 import { zod } from 'sveltekit-superforms/adapters'
 import { loginSchema } from '$lib/schema'
-import { fail } from '@sveltejs/kit'
 import { redirect } from '@sveltejs/kit'
+import { isError } from '$lib/types'
+import type { ApiError, LoginResponse } from '$lib/apiTypes'
+import { useApi } from '$lib/api'
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ cookies }) => {
+    // already logged in, straight to dashboard
+    const token = cookies.get('token')
+    if (token !== undefined) throw redirect(307, '/dashboard')
+
     return {
         form: await superValidate(zod(loginSchema))
     }
 }
 
 export const actions: Actions = {
-    default: async ({ request }) => {
+    default: async ({ request, cookies }) => {
         const form = await superValidate(request, zod(loginSchema))
         if (!form.valid) {
-            return fail(400, { form })
+            return actionResult('failure', { form }, 400)
         }
 
         const reqData = {
             username: form.data.username,
             password: form.data.password
         }
+        const data = await useApi(null, '/api/auth/login', 'POST', reqData)
 
-        //console.log(JSON.stringify(reqData))
-
-        const data = await fetch('http://localhost:8080/api/auth/login', {
-            method: 'POST',
-            body: JSON.stringify(reqData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-        //await(data.json())
-
-        let text = await data.text()
-
-        //console.log(data.body)
-        console.log(text)
-        console.log(data.status)
-
-        if (data.status === 200) {
-            throw redirect(303, '/dashboard')
+        if (isError(data)) {
+            const error = data as ApiError
+            return setError(form, 'username', error.message)
+        } else {
+            const result = data as LoginResponse
+            cookies.set('token', result.token, { path: '/', httpOnly: false })
+            throw redirect(302, '/dashboard')
         }
     }
 }

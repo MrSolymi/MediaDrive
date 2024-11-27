@@ -1,6 +1,7 @@
 package me.solymi.service.impl;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 @Service
 public class JwtServiceImpl implements JwtService {
@@ -27,12 +29,11 @@ public class JwtServiceImpl implements JwtService {
         Map<String, Object> claims = new HashMap<>();
         userDetails.getAuthorities().forEach(authority -> claims.put(authority.getAuthority(), authority));
 
-
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+150000))
+                .expiration(new Date(System.currentTimeMillis()+60000))
                 .signWith(getKey())
                 .compact();
     }
@@ -49,7 +50,6 @@ public class JwtServiceImpl implements JwtService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
         return claimsResolver.apply(claims);
     }
 
