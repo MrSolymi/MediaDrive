@@ -15,7 +15,6 @@ public class ProfileController extends AbstractController {
     @GetMapping(path = "/info")
     public ProfileInfoResponse getProfileInfo() {
         var user = getCurrentUser();
-        if (user == null) throw new RuntimeException("User not found");
 
         return new ProfileInfoResponse(user.getUsername(), user.getEmail(), user.getRole());
     }

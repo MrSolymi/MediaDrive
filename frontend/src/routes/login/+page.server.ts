@@ -32,6 +32,7 @@ export const actions: Actions = {
 
         if (isError(data)) {
             const error = data as ApiError
+            
             return setError(form, 'username', error.message)
         } else {
             const result = data as LoginResponse

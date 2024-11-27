@@ -1,10 +1,12 @@
 package me.solymi.component;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import me.solymi.exception.ApiException;
 import me.solymi.service.JwtService;
 import me.solymi.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserService userService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");//Bearer xxx.yyy.zz
         final String jwt;
         final String username;
@@ -36,7 +38,11 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
             return ;
         }
+
         jwt = authHeader.substring(7);
+
+        System.out.println(jwt);
+
         username = jwtService.extractUsername(jwt);
 
         if(StringUtils.isNotEmpty(username)
