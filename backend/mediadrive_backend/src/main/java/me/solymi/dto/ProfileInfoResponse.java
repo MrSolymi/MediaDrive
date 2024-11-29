@@ -6,5 +6,4 @@ public record ProfileInfoResponse(
         String username,
         String email,
         Role role
-) {
-}
+) { }

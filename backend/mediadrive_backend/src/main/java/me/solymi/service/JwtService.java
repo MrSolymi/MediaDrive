@@ -1,10 +1,13 @@
 package me.solymi.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import me.solymi.model.User;
 
 public interface JwtService {
 
-    String extractUsername(String token);
-    String generateToken(UserDetails userDetails);
-    boolean validateToken(String token, UserDetails userDetails);
+    DecodedJWT verify(String token);
+
+    User extractUser(DecodedJWT jwt);
+
+    String generateJwt(User user);
 }
