@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.solymi.component.ApiAuthenticationProvider;
 import me.solymi.security.ApiAuthenticationFilter;
 import me.solymi.service.JwtService;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,27 +33,35 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager manager) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
+        http
                 .logout(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
+                .formLogin(AbstractHttpConfigurer::disable)
+
                 .sessionManagement(s -> s.sessionCreationPolicy(STATELESS))
-                .authorizeHttpRequests(req -> req.anyRequest().permitAll())
-                .addFilterBefore(new ApiAuthenticationFilter(new AntPathRequestMatcher("/**"), manager, jwtService),
+
+                .csrf(AbstractHttpConfigurer::disable)
+
+                .cors(Customizer.withDefaults())
+
+                .addFilterBefore(new ApiAuthenticationFilter(new AntPathRequestMatcher("/api/**"), manager, jwtService),
                         AnonymousAuthenticationFilter.class)
+
+                .authorizeHttpRequests(s -> s.anyRequest().permitAll())
+
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder createEncoder(){
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public HttpFirewall createFirewall() { return new StrictHttpFirewall(); }
+    public HttpFirewall httpFirewall() { return new StrictHttpFirewall(); }
 
     @Bean
-    public AuthenticationManager createAuthManager() { return new ProviderManager(authProvider); }
+    public AuthenticationManager authenticationManager() { return new ProviderManager(authProvider); }
 }

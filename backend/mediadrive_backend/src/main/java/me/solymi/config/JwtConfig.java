@@ -23,4 +23,9 @@ public class JwtConfig {
                 .build();
     }
 
+    @Bean
+    public JWT jwt() {
+        return new JWT();
+    }
+
 }

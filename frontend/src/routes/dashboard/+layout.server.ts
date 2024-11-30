@@ -9,12 +9,14 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 
 	const resData = await useApi(token as string, '/api/profile/info', 'GET');
 
-	console.log(resData);
+	//console.log(resData);
 
-	if (isError(resData)) {
+	//console.log('error' in resData);
+
+	if ('error' in resData) {
 		// invalid authentication
 
-		console.log(resData);
+		cookies.delete('token', { path: '/' });
 
 		throw redirect(307, '/login');
 	}

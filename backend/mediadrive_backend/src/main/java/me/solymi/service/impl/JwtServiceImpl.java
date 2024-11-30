@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
+import me.solymi.exception.ApiException;
 import me.solymi.model.Role;
 import me.solymi.model.User;
 import me.solymi.service.JwtService;
@@ -12,7 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Locale;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -23,6 +24,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public DecodedJWT verify(String token) {
+        //if (isTokenExpired(jwtVerifier.verify(token))) throw ApiException.unauthorized("Token expired");
         return jwtVerifier.verify(token);
     }
 

@@ -9,16 +9,16 @@ public class ApiAuthenticationToken extends AbstractAuthenticationToken {
     private final DecodedJWT token;
     private final User user;
 
-    public ApiAuthenticationToken(DecodedJWT token) {
-        super(null);
-        this.token = token;
-        this.user = null;
-    }
-
-    public ApiAuthenticationToken(User user, DecodedJWT token) {
+    public ApiAuthenticationToken(final User user, final DecodedJWT token) {
         super(user.getRole().getAuthorities());
         this.token = token;
         this.user = user;
+    }
+
+    public ApiAuthenticationToken(final DecodedJWT token) {
+        super(null);
+        this.token = token;
+        this.user = null;
     }
 
     @Override

@@ -35,4 +35,8 @@ public class ApiException extends ResponseStatusException {
     public static ApiException forbidden(final String reason) {
         return new ApiException(HttpStatus.FORBIDDEN, reason);
     }
+
+    public static ApiException unauthorized(final String reason) {
+        return new ApiException(HttpStatus.UNAUTHORIZED, reason);
+    }
 }
