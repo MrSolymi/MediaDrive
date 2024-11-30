@@ -12,6 +12,9 @@ public abstract class AbstractController {
 
     protected User getCurrentUser() {
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        System.out.println("context: " + username);
+
         return userRepo.findByUsername(username);
     }
 }

@@ -14,9 +14,4 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiException> handleException(ApiException e) {
         return new ResponseEntity<>(e, e.getHeaders(), e.getStatusCode().value());
     }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ApiException> handleAccessDeniedException(AccessDeniedException e) {
-        return new ResponseEntity<>(ApiException.forbidden(e.getMessage()), HttpStatus.FORBIDDEN);
-    }
 }

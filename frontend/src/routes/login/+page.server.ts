@@ -30,13 +30,18 @@ export const actions: Actions = {
         }
         const data = await useApi(null, '/api/auth/login', 'POST', reqData)
 
+        //console.log(data)
+
         if (isError(data)) {
             const error = data as ApiError
             
             return setError(form, 'username', error.message)
         } else {
             const result = data as LoginResponse
+
+            //console.log(result)
             cookies.set('token', result.token, { path: '/', httpOnly: false })
+            console.log(cookies.get('token'))
             throw redirect(302, '/dashboard')
         }
     }

@@ -1,7 +1,6 @@
 package me.solymi.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,11 +44,10 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority("base"));
     }
 
-    public User(String email, String username, String password, Role role) {
+    public User(Long id, String username, String email, Role role) {
+        this.id = id;
         this.email = email;
         this.username = username;
-        this.password = password;
         this.role = role;
-        this.lastLogin = ZonedDateTime.now();
     }
 }
