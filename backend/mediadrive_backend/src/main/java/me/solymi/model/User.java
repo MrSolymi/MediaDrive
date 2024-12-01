@@ -1,8 +1,9 @@
 package me.solymi.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +12,7 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+@Getter
 @Entity
 @Table(name = "Users")
 @NoArgsConstructor
@@ -33,9 +34,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Setter
     @Column(name = "last_login")
     private ZonedDateTime lastLogin;
 
+    @Setter
     @Column(name = "last_ip")
     private String lastIp;
 
@@ -48,6 +51,13 @@ public class User implements UserDetails {
         this.id = id;
         this.email = email;
         this.username = username;
+        this.role = role;
+    }
+
+    public User(String username, String email, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
         this.role = role;
     }
 }

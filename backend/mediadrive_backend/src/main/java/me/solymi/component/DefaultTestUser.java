@@ -19,12 +19,11 @@ public class DefaultTestUser {
     public void init() {
         if (userRepo.count() == 0) {
             var user = new User(
-                    1L,
                     "testuser",
                     "testuser@example.com",
+                    encoder.encode("password123"),
                     Role.USER
             );
-            user.setPassword(encoder.encode("password123"));
             userRepo.save(user);
             System.out.println("Default test user created");
         }

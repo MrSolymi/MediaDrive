@@ -22,3 +22,6 @@ gradle-app.setting
 
 /frontend/.svelte-kit
 /frontend/node_modules
+
+/backend/.$db.drawio.bkp
+/backend/.$db.svg.bkp

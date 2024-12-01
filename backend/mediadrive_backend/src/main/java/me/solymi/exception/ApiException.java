@@ -32,6 +32,10 @@ public class ApiException extends ResponseStatusException {
         return new ApiException(HttpStatus.BAD_REQUEST, reason);
     }
 
+    public static ApiException registerError(final String reason, int field) {
+        return new ApiException(HttpStatus.BAD_REQUEST, reason, field);
+    }
+
     public static ApiException forbidden(final String reason) {
         return new ApiException(HttpStatus.FORBIDDEN, reason);
     }
@@ -39,4 +43,5 @@ public class ApiException extends ResponseStatusException {
     public static ApiException unauthorized(final String reason) {
         return new ApiException(HttpStatus.UNAUTHORIZED, reason);
     }
+
 }
