@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import { useApi } from '$lib/api';
-import { isError, type ProfileInfo } from '$lib/types';
+import { isTokenExpiredError, isError, type ProfileInfo } from '$lib/types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
 	const token = cookies.get('token');
@@ -13,7 +13,7 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 
 	//console.log('error' in resData);
 
-	if ('error' in resData) {
+	if (isTokenExpiredError(resData)) {
 		// invalid authentication
 
 		cookies.delete('token', { path: '/' });

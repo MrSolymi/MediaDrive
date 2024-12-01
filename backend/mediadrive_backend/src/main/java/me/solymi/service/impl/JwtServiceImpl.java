@@ -44,7 +44,7 @@ public class JwtServiceImpl implements JwtService {
         return JWT.create()
                 .withIssuer("solymi.tech")
                 .withSubject(user.getUsername())
-                .withExpiresAt(Instant.now().plus(1, TimeUnit.MINUTES.toChronoUnit()))
+                .withExpiresAt(Instant.now().plus(1000, TimeUnit.DAYS.toChronoUnit()))
                 .withClaim("id", user.getId().toString())
                 .withClaim("email", user.getEmail())
                 .withClaim("role", user.getRole().name())
