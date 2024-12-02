@@ -1,23 +1,22 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button/index.js';
+	import RegisterForm from '$lib/components/auth/RegisterForm.svelte';
 	import * as Card from '$lib/components/ui/card/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
+	import type { PageData } from '../../routes/register/$types';
+
+	export let data: PageData;
 </script>
 
 <div class="flex h-screen w-full items-center justify-center px-4">
 	<Card.Root class="mx-auto max-w-sm">
 		<Card.Header>
 			<Card.Title class="text-2xl">Registration</Card.Title>
-			<Card.Description>Enter your inivte token below to register</Card.Description>
+			<Card.Description>
+				Enter your account details and inivte token below to register
+			</Card.Description>
 		</Card.Header>
 		<Card.Content>
-			<div class="grid gap-4">
-				<div class="grid gap-2">
-					<Label for="email">Invite token</Label>
-					<Input id="email" type="email" placeholder="example token" required />
-				</div>
-				<Button type="submit" class="w-full">Register</Button>
+			<div>
+				<RegisterForm data={data.form} />
 			</div>
 			<div class="mt-4 text-center text-sm">
 				Have an account?

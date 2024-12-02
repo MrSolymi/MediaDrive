@@ -1,23 +1,35 @@
-import type { ProfileInfo } from "./types"
+import type { ProfileInfo } from './types';
 
 export interface ApiError {
-    message: string
-    details: Array<any>
-    error: {
-        statusCode: number
-        statusPhrase: string
-    }
+	message: string;
+	details: Array<any>;
+	error: {
+		statusCode: number;
+		statusPhrase: string;
+	};
 }
 
 export interface LoginRequest {
-    username: string
-    password: string
+	username: string;
+	password: string;
 }
 
 export interface LoginResponse {
-    token: string
+	token: string;
 }
 
-export type BackendRequest = LoginRequest | null
+export interface RegisterRequest {
+	username: string;
+	email: string;
+	password: string;
+	passwordConfirm: string;
+	inviteToken: string;
+}
 
-export type BackendResponse = LoginResponse | ProfileInfo
+export interface RegisterResponse {
+	status: string;
+}
+
+export type BackendRequest = LoginRequest | RegisterRequest | null;
+
+export type BackendResponse = LoginResponse | RegisterResponse | ProfileInfo;

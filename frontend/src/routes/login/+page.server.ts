@@ -4,7 +4,7 @@ import { zod } from 'sveltekit-superforms/adapters'
 import { loginSchema } from '$lib/schema'
 import { redirect } from '@sveltejs/kit'
 import { isError } from '$lib/types'
-import type { ApiError, LoginResponse } from '$lib/apiTypes'
+import type { ApiError, LoginRequest, LoginResponse } from '$lib/apiTypes'
 import { useApi } from '$lib/api'
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -24,7 +24,7 @@ export const actions: Actions = {
             return actionResult('failure', { form }, 400)
         }
 
-        const reqData = {
+        const reqData: LoginRequest = {
             username: form.data.username,
             password: form.data.password
         }
