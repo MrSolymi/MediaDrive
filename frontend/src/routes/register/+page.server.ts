@@ -1,11 +1,12 @@
-import { redirect, type Actions } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
-import { actionResult, setError, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
-import { loginSchema, registerSchema } from '$lib/schema';
-import { useApi } from '$lib/api';
-import { isError } from '$lib/types';
-import type { ApiError, RegisterRequest, RegisterResponse } from '$lib/apiTypes';
+import { redirect, type Actions } from "@sveltejs/kit";
+import type { PageServerLoad } from "../$types";
+import { setError, superValidate } from "sveltekit-superforms";
+import { zod } from "sveltekit-superforms/adapters";
+import { loginSchema, registerSchema } from "$lib/schema";
+import { actionResult } from "sveltekit-superforms";
+import type { ApiError, RegisterRequest, RegisterResponse } from "$lib/apiTypes";
+import { useApi } from "$lib/api";
+import { isError } from "$lib/types";
 
 export const load: PageServerLoad = async ({ cookies }) => {
 	// already logged in, straight to dashboard
@@ -13,7 +14,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	if (token !== undefined) throw redirect(307, '/dashboard');
 
 	return {
-		form: await superValidate(zod(loginSchema))
+		form: await superValidate(zod(registerSchema))
 	};
 };
 

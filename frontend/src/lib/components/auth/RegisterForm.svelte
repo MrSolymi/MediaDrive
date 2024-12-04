@@ -6,7 +6,7 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { registerSchema, type RegisterSchema } from '$lib/schema';
 
-	export let data: SuperValidated<Infer<RegisterForm>>;
+	export let data: SuperValidated<Infer<RegisterSchema>>;
 
 	const form = superForm(data, {
 		validators: zodClient(registerSchema)
@@ -58,16 +58,12 @@
 					/>
 				{/snippet}
 			</Form.Control>
-        </Form.Field>
-        <Form.Field class="grid gap-2" {form} name="inviteToken">
+		</Form.Field>
+		<Form.Field class="grid gap-2" {form} name="inviteToken">
 			<Form.Control>
 				{#snippet children({ props })}
 					<Form.Label>Invite Token</Form.Label>
-					<Input
-						placeholder="Invite Token"
-						{...props}
-						bind:value={$formData.inviteToken}
-					/>
+					<Input placeholder="Invite Token" {...props} bind:value={$formData.inviteToken} />
 				{/snippet}
 			</Form.Control>
 			<Form.Button type="submit" class="w-full">Sign Up</Form.Button>

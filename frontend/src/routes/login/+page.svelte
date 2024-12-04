@@ -1,7 +1,7 @@
 <script lang="ts">
+	import LoginForm from '$lib/components/auth/LoginForm.svelte'
     import * as Card from '$lib/components/ui/card/index.js';
 	import type { PageData } from '../../routes/login/$types';
-	import LoginForm from '$lib/components/auth/LoginForm.svelte'
 
 	export let data: PageData;
 </script>
