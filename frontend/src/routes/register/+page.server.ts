@@ -1,12 +1,12 @@
-import { redirect, type Actions } from "@sveltejs/kit";
-import type { PageServerLoad } from "../$types";
-import { setError, superValidate } from "sveltekit-superforms";
-import { zod } from "sveltekit-superforms/adapters";
-import { loginSchema, registerSchema } from "$lib/schema";
-import { actionResult } from "sveltekit-superforms";
-import type { ApiError, RegisterRequest, RegisterResponse } from "$lib/apiTypes";
-import { useApi } from "$lib/api";
-import { isError } from "$lib/types";
+import { redirect, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from '../$types';
+import { setError, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { registerSchema } from '$lib/schema';
+import { actionResult } from 'sveltekit-superforms';
+import type { ApiError, RegisterRequest, RegisterResponse } from '$lib/apiTypes';
+import { useApi } from '$lib/api';
+import { isError } from '$lib/types';
 
 export const load: PageServerLoad = async ({ cookies }) => {
 	// already logged in, straight to dashboard
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	if (token !== undefined) throw redirect(307, '/dashboard');
 
 	return {
-		form: await superValidate(zod(registerSchema))
+		form: await superValidate(zod(registerSchema)), isDialogOpen: false
 	};
 };
 
@@ -38,11 +38,17 @@ export const actions: Actions = {
 		if (isError(data)) {
 			const error = data as ApiError;
 
+			console.log('error', error);
+
 			return setError(form, 'username', error.message);
 		} else {
 			const result = data as RegisterResponse;
 
-			throw redirect(302, '/login');
+			console.log(result);
+
+			//throw redirect(302, '/login');
+			
+			return actionResult('success', { isDialogOpen : true, form });
 		}
 	}
 };

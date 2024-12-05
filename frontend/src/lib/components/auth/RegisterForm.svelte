@@ -6,6 +6,9 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { registerSchema, type RegisterSchema } from '$lib/schema';
 
+	import * as AlertDialog from '../ui/alert-dialog';
+	import { redirect } from '@sveltejs/kit';
+
 	export let data: SuperValidated<Infer<RegisterSchema>>;
 
 	const form = superForm(data, {
@@ -13,6 +16,9 @@
 	});
 
 	const { form: formData, enhance } = form;
+
+	export let isDialogOpen = false;
+
 </script>
 
 <form method="POST" use:enhance>
@@ -70,3 +76,18 @@
 		</Form.Field>
 	</div>
 </form>
+
+<AlertDialog.Root open={isDialogOpen}>
+	<AlertDialog.Trigger></AlertDialog.Trigger>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Login Success</AlertDialog.Title>
+			<AlertDialog.Description>
+				Your account has been created. You will be redirected to the login page.
+			</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Action onclick={() => redirect(302, '/login')}>OK</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>
