@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	if (token !== undefined) throw redirect(307, '/dashboard');
 
 	return {
-		form: await superValidate(zod(registerSchema)), isDialogOpen: false
+		form: await superValidate(zod(registerSchema))
 	};
 };
 
@@ -48,7 +48,9 @@ export const actions: Actions = {
 
 			//throw redirect(302, '/login');
 			
-			return actionResult('success', { isDialogOpen : true, form });
+			return { form, isDialogOpen: true };
+
+			//return actionResult('success', { isDialogOpen : true, form });
 		}
 	}
 };

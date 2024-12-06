@@ -1,11 +1,10 @@
 <script lang="ts">
 	import RegisterForm from '$lib/components/auth/RegisterForm.svelte';
 	import * as Card from '$lib/components/ui/card/index.js';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 
-	export let data: PageData;
-
-	export let isDialogOpen = false;
+	//export let data: PageData;
+	let { data, form }: { data: PageData, form: ActionData } = $props();
 </script>
 
 <div class="flex h-screen w-full items-center justify-center px-4">
@@ -18,7 +17,7 @@
 		</Card.Header>
 		<Card.Content>
 			<div>
-				<RegisterForm data={data.form} />
+				<RegisterForm data={data.form} isDialogOpen={ form ? form.isDialogOpen ?? false : false } />
 			</div>
 			<div class="mt-4 text-center text-sm">
 				Have an account?
