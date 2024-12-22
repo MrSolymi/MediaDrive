@@ -12,3 +12,7 @@ export interface ProfileInfo {
     email: string
     role: string
 }
+
+//export interface InviteTokenInfo {
+//    token: string
+//}

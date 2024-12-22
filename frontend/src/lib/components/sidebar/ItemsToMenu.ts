@@ -1,33 +1,27 @@
-import House from "lucide-svelte/icons/house";
-import Calendar from "lucide-svelte/icons/calendar";
-import Inbox from "lucide-svelte/icons/inbox";
-import Search from "lucide-svelte/icons/search";
-import Settings from "lucide-svelte/icons/settings";
+import House from 'lucide-svelte/icons/house';
+import User from 'lucide-svelte/icons/user';
+import MailPlus from 'lucide-svelte/icons/mail-plus';
+import Settings from 'lucide-svelte/icons/settings';
 
 export const items = [
-    {
-      title: "Home",
-      url: "#",
-      icon: House,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-    },
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-    },
-  ];
+	{
+		title: 'Home',
+		url: '/dashboard',
+		icon: House
+	},
+	{
+		title: 'Users',
+		url: '/dashboard/users',
+		icon: User
+	},
+	{
+		title: 'Settings',
+		url: '/dashboard/settings',
+		icon: Settings
+	},
+	{
+		title: 'Invites',
+		url: '/dashboard/invites',
+		icon: MailPlus
+	}
+];

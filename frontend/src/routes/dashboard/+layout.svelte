@@ -8,6 +8,11 @@
 
 <Sidebar.Provider style="--sidebar-width: 20rem; --sidebar-width-mobile: 20rem;">
 	<AppSidebar />
+	<main>
+		<Sidebar.Trigger />
+		{@render children?.()}
+	</main>
+	<!--
 	<Sidebar.Inset>
 		<header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
 			<Sidebar.Trigger class="scale-150" />
@@ -25,4 +30,5 @@
 			<div class="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min"></div>
 		</div>
 	</Sidebar.Inset>
+	-->
 </Sidebar.Provider>

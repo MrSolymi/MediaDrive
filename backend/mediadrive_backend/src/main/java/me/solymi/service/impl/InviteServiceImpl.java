@@ -9,6 +9,8 @@ import me.solymi.service.InviteService;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class InviteServiceImpl implements InviteService {
@@ -45,6 +47,18 @@ public class InviteServiceImpl implements InviteService {
     @Override
     public void saveToken(InviteToken token) {
         inviteTokenRepo.save(token);
+    }
+
+    @Override
+    public void deleteToken(String token) {
+        var tokenForDelete = inviteTokenRepo.findByToken(token);
+
+        inviteTokenRepo.delete(tokenForDelete);
+    }
+
+    @Override
+    public List<InviteToken> getAllInviteTokens(User user) {
+        return inviteTokenRepo.findAllByUser(user);
     }
 
 }

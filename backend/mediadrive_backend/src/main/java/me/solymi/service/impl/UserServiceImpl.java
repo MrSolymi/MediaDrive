@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -78,6 +79,11 @@ public class UserServiceImpl implements UserService {
         auditService.audit(user, AuditAction.REGISTER, "Registered from " + ip);
 
         return new RegisterResponse("succeeded");
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
     }
 
     private void requestCheck(RegisterRequest request) {

@@ -26,10 +26,22 @@ export interface RegisterRequest {
 	inviteToken: string;
 }
 
+export interface DeleteInviteTokenRequest {
+	token: string;
+}
+
 export interface RegisterResponse {
 	status: string;
 }
 
-export type BackendRequest = LoginRequest | RegisterRequest | null;
+export interface AllUserResponse {
+	users: string[];
+}
 
-export type BackendResponse = LoginResponse | RegisterResponse | ProfileInfo;
+export interface AllInvitesResponse {
+	invites: string[];
+}
+
+export type BackendRequest = LoginRequest | RegisterRequest | null | DeleteInviteTokenRequest;
+
+export type BackendResponse = LoginResponse | RegisterResponse | ProfileInfo | AllUserResponse | AllInvitesResponse;

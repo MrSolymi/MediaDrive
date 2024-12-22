@@ -2,11 +2,7 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import { items } from '$lib/components/sidebar/ItemsToMenu';
 
-	const menu = items.map((item) => ({
-		title: item.title,
-		url: '#',
-		icon: item.icon
-	}));
+	const menu = items;
 </script>
 
 <Sidebar.Root>
